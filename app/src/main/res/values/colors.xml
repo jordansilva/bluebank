@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="blue_50">#FFE3F2FD</color>
+    <color name="blue_100">#FFBBDEFB</color>
+    <color name="blue_200">#FF90CAF9</color>
+    <color name="blue_300">#FF64B5F6</color>
+    <color name="blue_400">#FF42A5F5</color>
+    <color name="blue_500">#FF2196F3</color>
+    <color name="blue_600">#FF1E88E5</color>
+    <color name="blue_700">#FF1976D2</color>
+    <color name="blue_800">#FF1565C0</color>
+    <color name="blue_900">#FF0D47A1</color>
+    <color name="blue_A100">#FF82B1FF</color>
+    <color name="blue_A200">#FF448AFF</color>
+    <color name="blue_A400">#FF2979FF</color>
+    <color name="blue_A700">#FF2962FF</color>
+
+    <color name="yellow_50">#FFFFFDE7</color>
+    <color name="yellow_100">#FFFFF9C4</color>
+    <color name="yellow_200">#FFFFF59D</color>
+    <color name="yellow_300">#FFFFF176</color>
+    <color name="yellow_400">#FFFFEE58</color>
+    <color name="yellow_500">#FFFFEB3B</color>
+    <color name="yellow_600">#FFFDD835</color>
+    <color name="yellow_700">#FFFBC02D</color>
+    <color name="yellow_800">#FFF9A825</color>
+    <color name="yellow_900">#FFF57F17</color>
+    <color name="yellow_A100">#FFFFFF8D</color>
+    <color name="yellow_A200">#FFFFFF00</color>
+    <color name="yellow_A400">#FFFFEA00</color>
+    <color name="yellow_A700">#FFFFD600</color>
+
+    <color name="amber_50">#FFFFF8E1</color>
+    <color name="amber_100">#FFFFECB3</color>
+    <color name="amber_200">#FFFFE082</color>
+    <color name="amber_300">#FFFFD54F</color>
+    <color name="amber_400">#FFFFCA28</color>
+    <color name="amber_500">#FFFFC107</color>
+    <color name="amber_600">#FFFFB300</color>
+    <color name="amber_700">#FFFFA000</color>
+    <color name="amber_800">#FFFF8F00</color>
+    <color name="amber_900">#FFFF6F00</color>
+    <color name="amber_A100">#FFFFE57F</color>
+    <color name="amber_A200">#FFFFD740</color>
+    <color name="amber_A400">#FFFFC400</color>
+    <color name="amber_A700">#FFFFAB00</color>
+
+    <color name="gre_y50">#FFFAFAFA</color>
+    <color name="grey_100">#FFF5F5F5</color>
+    <color name="grey_200">#FFEEEEEE</color>
+    <color name="grey_300">#FFE0E0E0</color>
+    <color name="grey_400">#FFBDBDBD</color>
+    <color name="grey_500">#FF9E9E9E</color>
+    <color name="grey_600">#FF757575</color>
+    <color name="grey_700">#FF616161</color>
+    <color name="grey_800">#FF424242</color>
+    <color name="grey_900">#FF212121</color>
+</resources>

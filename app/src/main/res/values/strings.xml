@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Blue Bank</string>
+
+    <string name="profile_settings">Perfil Pessoa Física. Configurações</string>
+
+    <string name="hello_username">Olá, %1$s</string>
+    <string name="account">Conta</string>
+    <string name="my_cards">Meus cartões</string>
+    <string name="area_pix">Área Pix</string>
+    <string name="payment_transfer">Transferir</string>
+    <string name="payment_deposit">Depositar</string>
+    <string name="payment_loan">Pegar emprestado</string>
+    <string name="payment_recharge_phone">Recarga de celular</string>
+    <string name="payment_request">Cobrar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="balance_show">Mostrar saldo</string>
+    <string name="balance_hide">Esconder saldo</string>
+    <string name="balance_hidden">O saldo não está visível</string>
+</resources>
