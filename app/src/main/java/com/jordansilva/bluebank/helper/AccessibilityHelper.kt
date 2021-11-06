@@ -11,10 +11,13 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.ViewConfiguration
-import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.semantics.SemanticsPropertyKey
+import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.unit.dp
+import com.jordansilva.bluebank.BuildConfig
 import com.jordansilva.bluebank.ui.theme.Amber700
 
 fun Modifier.enableFocus(hasFocus: MutableState<Boolean>): Modifier {
@@ -42,19 +45,20 @@ fun Modifier.focusBorder(hasFocus: Boolean, shape: Shape? = null): Modifier {
     return this.then(borderModifier)
 }
 
-
-fun wrongViewConfiguration(configuration: ViewConfiguration): ViewConfiguration {
-    return object : ViewConfiguration {
-        override val doubleTapMinTimeMillis: Long
-            get() = configuration.doubleTapMinTimeMillis
-        override val doubleTapTimeoutMillis: Long
-            get() = configuration.doubleTapTimeoutMillis
-        override val longPressTimeoutMillis: Long
-            get() = configuration.longPressTimeoutMillis
-        override val touchSlop: Float
-            get() = configuration.touchSlop
-        override val minimumTouchTargetSize: DpSize
-            get() = DpSize(12.dp, 12.dp)
-
+fun SemanticsPropertyReceiver.testContrastRatio(
+    background: Color? = null,
+    foreground: Color? = null,
+    textSize: Float? = null,
+) {
+    if (BuildConfig.DEBUG) {
+        background?.let { set(MySemantics.Background, background.toArgb()) }
+        foreground?.let { set(MySemantics.Foreground, foreground.toArgb()) }
+        textSize?.let { set(MySemantics.TextSize, textSize) }
     }
+}
+
+object MySemantics {
+    val Background = SemanticsPropertyKey<Int>("BackgroundColor")
+    val Foreground = SemanticsPropertyKey<Int>("Foreground")
+    val TextSize = SemanticsPropertyKey<Float>("TextSize")
 }

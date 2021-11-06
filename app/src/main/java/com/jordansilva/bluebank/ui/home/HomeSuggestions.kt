@@ -7,10 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jordansilva.bluebank.R
 import com.jordansilva.bluebank.ui.components.HorizontalScroll
 import com.jordansilva.bluebank.ui.components.MyButton
+import com.jordansilva.bluebank.ui.theme.BlueBankTheme
 
 @Composable
 fun HomeSuggestions() {
@@ -28,7 +30,7 @@ fun HomeSuggestions() {
         HorizontalScroll(modifier = Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             SuggestionItem("Você tem até R$ 12.500,00\ndisponíveis para empréstimo.")
             SuggestionItem("Vamos reinventar o jeito de investir.\nCadastre-se e não fique de fora.")
-            SuggestionItem("Salve seus amigos da burocracia.\nFaça um convite para o Nubank.")
+            SuggestionItem("Salve seus amigos da burocracia.\nFaça um convite para o Blue bank.")
         }
     }
 }
@@ -40,3 +42,12 @@ private fun SuggestionItem(label: String) = MyButton(
     modifier = Modifier.size(width = 280.dp, height = 90.dp),
     textStyle = MaterialTheme.typography.button.copy(fontWeight = FontWeight.Medium)
 )
+
+
+@Preview
+@Composable
+fun HomeSuggestionsPreview() {
+    BlueBankTheme {
+        HomeSuggestions()
+    }
+}

@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -27,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jordansilva.bluebank.R
+import com.jordansilva.bluebank.helper.MySemantics
 import com.jordansilva.bluebank.helper.PreviewHelper
 import com.jordansilva.bluebank.helper.enableFocus
 import com.jordansilva.bluebank.helper.focusBorder
@@ -69,23 +72,30 @@ private fun PaymentItem(@DrawableRes iconId: Int, label: String, onClick: () -> 
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Button(
-            onClick = onClick,
-            modifier = Modifier
-                .background(Grey200, CircleShape)
-                .size(72.dp)
-                .focusBorder(hasFocus.value, CircleShape)
-                .clearAndSetSemantics { },
-            interactionSource = interactionSource,
-            elevation = null,
-            shape = CircleShape,
-            colors = ButtonDefaults.textButtonColors(),
-            contentPadding = PaddingValues()
-        ) {
-            Icon(painter = painterResource(id = iconId), tint = Color.Black, contentDescription = label)
-        }
+        CompositionLocalProvider(LocalContentColor provides Color.Black) {
+            val backgroundColor = Grey200
+            val contentColor = LocalContentColor.current
+            Button(
+                onClick = onClick,
+                modifier = Modifier
+                    .background(backgroundColor, CircleShape)
+                    .size(72.dp)
+                    .focusBorder(hasFocus.value, CircleShape)
+                    .clearAndSetSemantics {
+                        this[MySemantics.Foreground] = contentColor.toArgb()
+                        this[MySemantics.Background] = backgroundColor.toArgb()
+                    },
+                interactionSource = interactionSource,
+                elevation = null,
+                shape = CircleShape,
+                colors = ButtonDefaults.textButtonColors(),
+                contentPadding = PaddingValues()
+            ) {
+                Icon(painter = painterResource(id = iconId), tint = contentColor, contentDescription = label)
+            }
 
-        Text(label, style = MaterialTheme.typography.button.copy(letterSpacing = 0.sp), textAlign = TextAlign.Center)
+            Text(label, style = MaterialTheme.typography.button.copy(letterSpacing = 0.sp), textAlign = TextAlign.Center)
+        }
     }
 }
 

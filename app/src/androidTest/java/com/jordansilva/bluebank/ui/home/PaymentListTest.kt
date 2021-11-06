@@ -8,6 +8,8 @@ import androidx.compose.ui.unit.dp
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.jordansilva.bluebank.helper.*
+import com.jordansilva.bluebank.helper.AccessibilityHelper.MinTouchAreaHeight
+import com.jordansilva.bluebank.helper.AccessibilityHelper.MinTouchAreaWidth
 import com.jordansilva.bluebank.ui.theme.BlueBankTheme
 import org.junit.Before
 import org.junit.Rule

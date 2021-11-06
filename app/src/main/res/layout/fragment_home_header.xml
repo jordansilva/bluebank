@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@color/blue_700"
+    android:padding="16dp"
+    tools:context=".ui.home_fragment.HomeHeaderFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/profileButton"
+        style="@style/Theme.BlueBank.RoundedIconButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/profile_settings"
+        app:backgroundTint="#33FFFFFF"
+        app:icon="@drawable/ic_person_outline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/visibilityButton"
+        style="@style/Theme.BlueBank.RoundedIconButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/balance_hide"
+        app:backgroundTint="@android:color/transparent"
+        app:icon="@drawable/ic_visibility_on"
+        app:layout_constraintEnd_toStartOf="@+id/helperButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/helperButton"
+        style="@style/Theme.BlueBank.RoundedIconButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/balance_hide"
+        app:backgroundTint="@android:color/transparent"
+        app:icon="@drawable/ic_help_outline"
+        app:layout_constraintEnd_toStartOf="@+id/contactButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/contactButton"
+        style="@style/Theme.BlueBank.RoundedIconButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/balance_hide"
+        app:backgroundTint="@android:color/transparent"
+        app:icon="@drawable/ic_mail_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/accountName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing="0.05"
+        android:textColor="@color/white"
+        android:textSize="18.sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Olá, Jordan" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

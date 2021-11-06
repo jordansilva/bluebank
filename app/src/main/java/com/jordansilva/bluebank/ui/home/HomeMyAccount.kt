@@ -2,20 +2,21 @@ package com.jordansilva.bluebank.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jordansilva.bluebank.R
+import com.jordansilva.bluebank.helper.MySemantics
 import com.jordansilva.bluebank.helper.PreviewHelper
 import com.jordansilva.bluebank.ui.components.SectionHeader
 import com.jordansilva.bluebank.ui.theme.BlueBankTheme
@@ -25,12 +26,23 @@ import java.util.*
 
 @Composable
 fun HomeMyAccount(balance: Double, isPrivateMode: Boolean) {
+    val buttonColors = ButtonDefaults.textButtonColors()
+    val contentColor by buttonColors.contentColor(true)
+    val backgroundColor by buttonColors.backgroundColor(true)
+    val fontSize = MaterialTheme.typography.button.fontSize.value
+
     Button(
         onClick = { },
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .semantics {
+                this[MySemantics.Foreground] = contentColor.toArgb()
+                this[MySemantics.Background] = backgroundColor.toArgb()
+                this[MySemantics.TextSize] = fontSize
+            },
         shape = RectangleShape,
         elevation = null,
-        colors = ButtonDefaults.textButtonColors(),
+        colors = buttonColors,
     ) {
         CompositionLocalProvider(LocalContentColor provides Color.Black) {
             Column(modifier = Modifier

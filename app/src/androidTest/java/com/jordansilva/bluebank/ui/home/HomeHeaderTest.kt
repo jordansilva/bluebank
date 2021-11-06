@@ -1,14 +1,13 @@
 package com.jordansilva.bluebank.ui.home
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.size
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
+import androidx.compose.ui.unit.width
 import androidx.test.platform.app.InstrumentationRegistry
 import com.jordansilva.bluebank.R
 import com.jordansilva.bluebank.helper.*
@@ -16,10 +15,7 @@ import com.jordansilva.bluebank.ui.theme.BlueBankTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-@LargeTest
 class HomeHeaderTest {
 
     @get:Rule
@@ -40,13 +36,13 @@ class HomeHeaderTest {
     }
 
     @Test
-    fun validateHeaderScreenshot() {
+    fun checkSnapshot() {
         ScreenshotComparator.assertScreenshot("header", composeTestRule.onRoot())
     }
 
     @Test
     fun validateHeaderSize() {
-        val rootWidth = composeTestRule.onRoot().getUnclippedBoundsInRoot().size.width
+        val rootWidth = composeTestRule.onRoot().getUnclippedBoundsInRoot().width
 
         composeTestRule
             .onNodeWithTag(TestTag)
@@ -56,28 +52,28 @@ class HomeHeaderTest {
 
     // Accessibility Checks
     @Test
-    fun checkAccessibility_contentDescription() {
+    fun accessibilityContentDescription() {
         composeTestRule
-            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
+            .onAllNodes(hasClickAction() or hasRole(Role.Image))
             .assertAll(hasAnyContentDescription())
     }
 
     @Test
-    fun checkAccessibility_touchTargetArea() {
+    fun accessibilityTouchTargetArea() {
         composeTestRule
-            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
+            .onAllNodes(hasClickAction())
             .assertAll(hasMinTouchArea(MinTouchAreaWidth, MinTouchAreaHeight))
     }
 
     @Test
-    fun checkAccessibility_contrastColor() {
+    fun accessibilityContrastColor() {
         composeTestRule
-            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
-            .assertAll(hasMinTouchArea(MinTouchAreaWidth, MinTouchAreaHeight))
+            .onAllNodes(hasClickAction())
+            .assertAll(checkContrastRatio())
     }
 
-    // Functionality
 
+    // Functionality
     @Test
     fun givenVisibilityIsPublic_WhenClickPrivateButton_ThenVisibilityIsPrivate() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
@@ -97,26 +93,27 @@ class HomeHeaderTest {
             .assertHasClickAction()
     }
 
-    @Test
-    fun clickProfileClick() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val text = context.getString(R.string.profile_settings, AccountName)
-
-        composeTestRule
-            .onNodeWithContentDescription(text)
-            .assertIsDisplayed()
-            .assert(hasRole(Role.Button))
-            .assertHasClickAction()
-    }
+//    @Test
+//    fun clickProfileClick() {
+//        val context = InstrumentationRegistry.getInstrumentation().targetContext
+//        val text = context.getString(R.string.profile_settings, AccountName)
+//
+//        composeTestRule
+//            .onNodeWithContentDescription(text)
+//            .assertIsDisplayed()
+//            .assert(hasRole(Role.Button))
+//            .assertHasClickAction()
+//    }
 
     @Test
     fun checkHelloMessage() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        //appContext.getString(R.string.hello_username, AccountName)
         val helloMessage = appContext.getString(R.string.hello_username, AccountName)
         composeTestRule
-            .onNodeWithText(helloMessage)
-            .assertIsDisplayed()
-            .assertHasNoClickAction()
+            .onNodeWithText(helloMessage) // Pick a node with text
+            .assertIsDisplayed() // Assert it is displayed!
+            .assertHasNoClickAction() // And it has no click
     }
 
     private companion object {

@@ -1,22 +1,32 @@
 package com.jordansilva.bluebank.ui.home
 
+import android.icu.text.NumberFormat
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.NativeKeyEvent
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.filters.LargeTest
-import com.jordansilva.bluebank.MainActivityTest
+import androidx.test.platform.app.InstrumentationRegistry
+import com.jordansilva.bluebank.MainActivity
+import com.jordansilva.bluebank.R
 import com.jordansilva.bluebank.helper.*
+import com.jordansilva.bluebank.helper.AccessibilityHelper.MinTouchAreaHeight
+import com.jordansilva.bluebank.helper.AccessibilityHelper.MinTouchAreaWidth
 import com.jordansilva.bluebank.ui.theme.BlueBankTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.*
 
 @LargeTest
 class HomeScreenTest {
 
     @get:Rule
-    val composeTestRule = createAndroidComposeRule(ComponentActivity::class.java)
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Before
     fun setup() {
@@ -32,83 +42,84 @@ class HomeScreenTest {
         ScreenshotComparator.assertScreenshot("home_screen", composeTestRule.onRoot())
     }
 
+    // Accessibility Checks
+    @Test
+    fun accessibilityContentDescription() {
+        composeTestRule
+            .onAllNodes(hasClickAction() or hasRole(Role.Image))
+            .assertAll(hasAnyContentDescription())
+    }
+
+    @Test
+    fun accessibilityTouchTargetArea() {
+        composeTestRule
+            .onAllNodes(hasClickAction())
+            .assertAll(hasMinTouchArea(MinTouchAreaWidth, MinTouchAreaHeight))
+    }
+
+    @Test
+    fun accessibilityContrastColor() {
+        composeTestRule
+            .onAllNodes(hasClickAction())
+            .assertAll(checkContrastRatio())
+    }
+
     @Test
     fun validateHomeScreenFocusable() {
         composeTestRule
-            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
+            .onAllNodes(hasClickAction())
             .onFirst()
             .assertIsNotFocused()
 
         // Press down to focus first element
-        composeTestRule.onRoot().performKeyPress(keyEvent = NavigateDownKeyEvent)
+        val dpadDown = NativeKeyEvent(NativeKeyEvent.ACTION_DOWN, NativeKeyEvent.KEYCODE_DPAD_RIGHT)
+        composeTestRule.onRoot().performKeyPress(keyEvent = KeyEvent(dpadDown))
 
         composeTestRule
-            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
+            .onAllNodes(hasClickAction())
             .onFirst()
             .assertIsFocused()
 
         ScreenshotComparator.assertScreenshot("home_screen_focusable", composeTestRule.onRoot())
     }
 
-    // Accessibility Checks
-    @Test
-    fun checkAccessibility_contentDescription() {
-        composeTestRule
-            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
-            .assertAll(hasAnyContentDescription())
-    }
-
-    @Test
-    fun checkAccessibility_touchTargetArea() {
-        composeTestRule
-            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
-            .assertAll(hasMinTouchArea(MinTouchAreaWidth, MinTouchAreaHeight))
-    }
-//
-//    // Functionality
+    // Functionality
     @Test
     fun givenVisibilityIsPublic_WhenClickPrivateButton_ThenVisibilityIsPrivate() {
-//        val context = InstrumentationRegistry.getInstrumentation().targetContext
-//        val hideBalance = context.getString(R.string.balance_hide)
-//        composeTestRule
-//            .onNodeWithContentDescription(hideBalance)
-//            .assertIsDisplayed()
-//            .assertHasRole(Role.Button)
-//            .assertHasClickAction()
-//            .performClick()
-//
-//        val showBalance = context.getString(R.string.balance_show)
-//        composeTestRule
-//            .onNodeWithContentDescription(showBalance)
-//            .assertIsDisplayed()
-//            .assertHasRole(Role.Button)
-//            .assertHasClickAction()
+        val context = composeTestRule.activity.applicationContext
+        val hideBalance = context.getString(R.string.balance_hide)
+        val visibilityButton = composeTestRule
+            .onNodeWithContentDescription(hideBalance)
+            .assertIsDisplayed()
+            .assertHasClickAction()
+
+        // Checking My Account is displayed with visible balance
+        val myAccountText = context.getString(R.string.account)
+        val balanceText = MoneyFormat.format(Balance)
+        composeTestRule
+            .onNodeWithText(myAccountText)
+            .assertIsDisplayed()
+            .assert(hasContentDescription(balanceText) or hasText(balanceText))
+
+        // Hide balance
+        visibilityButton.performClick()
+
+        // Check no balance is displayed
+        composeTestRule
+            .onNodeWithText(balanceText)
+            .assertDoesNotExist()
+
+        // Check My Account has not visible balance text
+        val balanceHiddenText = context.getString(R.string.balance_hidden)
+        composeTestRule
+            .onNodeWithText(myAccountText)
+            .assertIsDisplayed()
+            .assert(hasContentDescription(balanceHiddenText) or hasText(balanceHiddenText))
     }
-//
-//    @Test
-//    fun clickProfileClick() {
-//        val context = InstrumentationRegistry.getInstrumentation().targetContext
-//        val text = context.getString(R.string.profile_settings, AccountName)
-//
-//        composeTestRule
-//            .onNodeWithContentDescription(text)
-//            .assertIsDisplayed()
-//            .assertHasRole(Role.Button)
-//            .assertHasClickAction()
-//    }
-//
-//    @Test
-//    fun checkHelloMessage() {
-//        val context = InstrumentationRegistry.getInstrumentation().targetContext
-//        val helloMessage = context.getString(R.string.hello_username, AccountName)
-//        composeTestRule
-//            .onNodeWithText(helloMessage)
-//            .assertIsDisplayed()
-//            .assertHasNoClickAction()
-//    }
 
     private companion object {
-
+        const val Balance = FakeAccountRepository.Balance
+        val MoneyFormat: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR")) //OK, Not the best
 
     }
 }

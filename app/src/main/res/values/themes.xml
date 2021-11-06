@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.BlueBank" parent="android:Theme.Material.Light.NoActionBar">
+    <!--    <style name="Theme.BlueBank" parent="android:Theme.Material.Light.NoActionBar">-->
+    <style name="Theme.BlueBank" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor">@color/blue_700</item>
+        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimaryVariant">@color/blue_700</item>
+        <item name="colorSecondary">@color/amber_500</item>
+        <item name="colorSecondaryVariant">@color/amber_700</item>
+<!--        <item name="backgroundColor">@android:color/white</item>-->
+<!--        <item name="colorSurface">@android:color/white</item>-->
+        <item name="colorError">#FFB00020</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="colorOnBackground">@color/grey_900</item>
+        <item name="colorOnSurface">@color/grey_900</item>
+        <item name="colorOnError">@android:color/white</item>
+    </style>
+
+    <style name="Theme.BlueBank.RoundedIconButton" parent="@style/Widget.MaterialComponents.Button.Icon">
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/Theme.BlueBank.RoundedButton</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Theme.BlueBank.RoundedButton" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconSize">24dp</item>
     </style>
 </resources>

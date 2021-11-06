@@ -1,8 +1,10 @@
 package com.jordansilva.bluebank
 
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.NativeKeyEvent
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.test.espresso.accessibility.AccessibilityChecks
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jordansilva.bluebank.helper.ScreenshotComparator
@@ -18,9 +20,6 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
-
-//    @get:Rule
-//    var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -50,6 +49,25 @@ class MainActivityTest {
     fun screenshot_suggestions() {
         val node = composeTestRule.onNodeWithTag("suggestions")
         screenshotComparator.assertScreenshot("suggestions", node)
+    }
+
+    @Test
+    fun validateHomeScreenFocusable() {
+        composeTestRule
+            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
+            .onFirst()
+            .assertIsNotFocused()
+
+        // Press down to focus first element
+        val dpadDown = NativeKeyEvent(NativeKeyEvent.ACTION_DOWN, NativeKeyEvent.KEYCODE_DPAD_DOWN)
+        composeTestRule.onRoot().performKeyPress(keyEvent = KeyEvent(dpadDown))
+
+        composeTestRule
+            .onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
+            .onFirst()
+            .assertIsFocused()
+
+        ScreenshotComparator.assertScreenshot("home_screen_focusable", composeTestRule.onRoot())
     }
 
 }

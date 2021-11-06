@@ -1,18 +1,25 @@
 package com.jordansilva.bluebank.ui.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jordansilva.bluebank.data.AccountRepository
 import com.jordansilva.bluebank.data.AccountRepositoryImpl
 
 class HomeViewModel(private val accountRepository: AccountRepository) : ViewModel() {
-    var uiState by mutableStateOf(loadMyAccount())
-        private set
+
+    private val _uiState = MutableLiveData(loadMyAccount())
+    val uiState: LiveData<HomeUiState> = _uiState
+
+//    var uiState = mutableStateOf(loadMyAccount())
+//        private set
+//
+//    private val _uiStateLD = MutableLiveData(uiState.value)
+//    val uiStateLiveData: LiveData<HomeUiState> = _uiStateLD
 
     private fun loadMyAccount(): HomeUiState {
+
         // Some nice call to our UseCase, Repository or another layer
         val myAccount = accountRepository.getAccount()
 
@@ -32,7 +39,7 @@ class HomeViewModel(private val accountRepository: AccountRepository) : ViewMode
      * @param isPrivate It indicates whether sensitive data should be visible or hidden
      */
     fun changeMode(isPrivate: Boolean) {
-        uiState = uiState.copy(isPrivateMode = isPrivate)
+        _uiState.value = _uiState.value?.copy(isPrivateMode = isPrivate)
     }
 
     /**

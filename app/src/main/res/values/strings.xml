@@ -14,8 +14,10 @@
     <string name="payment_request">Cobrar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="balance_show">Mostrar saldo</string>
     <string name="balance_hide">Esconder saldo</string>
     <string name="balance_hidden">O saldo não está visível</string>
+    <string name="avatar_description">Descrição do Avatar</string>
+    <string name="help">Abrir Ajuda</string>
+    <string name="contact">Entrar em contato</string>
 </resources>

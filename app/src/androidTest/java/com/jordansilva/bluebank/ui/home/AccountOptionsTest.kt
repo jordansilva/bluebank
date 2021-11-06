@@ -5,9 +5,11 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.size
+import androidx.compose.ui.unit.width
 import androidx.test.filters.LargeTest
 import com.jordansilva.bluebank.helper.*
+import com.jordansilva.bluebank.helper.AccessibilityHelper.MinTouchAreaHeight
+import com.jordansilva.bluebank.helper.AccessibilityHelper.MinTouchAreaWidth
 import com.jordansilva.bluebank.ui.theme.BlueBankTheme
 import org.junit.Before
 import org.junit.Rule
@@ -57,7 +59,7 @@ class AccountOptionsTest {
 
     @Test
     fun checkIfAllOptionsAvailable() {
-        val rootWidth = composeTestRule.onRoot().getUnclippedBoundsInRoot().size.width
+        val rootWidth = composeTestRule.onRoot().getUnclippedBoundsInRoot().width// .size.width
 
         val buttons = composeTestRule.onAllNodes(hasRole(Role.Button))
         AccountServices.forEachIndexed { index, service ->
